@@ -26,7 +26,7 @@ from platformio.compat import IS_CYGWIN, ensure_python3
 @click.command(
     cls=PlatformioCLI, context_settings={"help_option_names": ["-h", "--help"]}
 )
-@click.version_option(__version__, prog_name="PlatformIO Core")
+@click.version_option(__version__, prog_name="PlatformIO Fixed")
 @click.option("--force", "-f", is_flag=True, help="DEPRECATED", hidden=True)
 @click.option("--caller", "-c", help="Caller ID (service)")
 @click.option("--no-ansi", is_flag=True, help="Do not print ANSI control characters")
@@ -124,7 +124,7 @@ An unexpected error occurred. Further steps:
   https://docs.platformio.org/page/faq/index.html
 
 * Report this problem to the developers
-  https://github.com/platformio/platformio-core/issues
+  https://github.com/platformio/platformio-fixed/issues
 
 ============================================================
 """

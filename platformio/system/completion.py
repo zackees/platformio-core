@@ -81,7 +81,7 @@ def install_completion_code(shell, path):
             fp.write("\n\n# Begin: PlatformIO Core completion support\n")
         fp.write(get_completion_code(shell))
         if append:
-            fp.write("\n# End: PlatformIO Core completion support\n\n")
+            fp.write("\n# End: PlatformIO Fixed completion support\n\n")
     return True
 
 

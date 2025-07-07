@@ -1,5 +1,5 @@
 
-# Gemini Code Working Guide: platformio-core
+# Gemini Code Working Guide: platformio-fixed
 
 This document provides an AI-centric overview of the `platformio-core` repository, designed to guide generative AI agents in understanding, navigating, and contributing to the project.
 
