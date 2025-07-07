@@ -54,7 +54,7 @@ class PackageType:
         assert path.endswith("tar.gz")
         manifest_map = cls.get_manifest_map()
         with tarfile.open(path, mode="r:gz") as tf:
-            for t in sorted(cls.items().values()):
+            for t in sorted(cls.items().values()):  # type: ignore
                 for manifest in manifest_map[t]:
                     try:
                         if tf.getmember(manifest):
@@ -227,8 +227,8 @@ class PackageSpec:  # pylint: disable=too-many-instance-attributes
         )
 
     def __hash__(self):
-        return crc32(
-            hashlib_encode_data(
+        return crc32(  # type: ignore
+            hashlib_encode_data(  # type: ignore
                 "%s-%s-%s-%s-%s"
                 % (self.owner, self.id, self.name, self.requirements, self.uri)
             )
@@ -560,4 +560,5 @@ class PackageItem:
             if os.path.isdir(location):
                 break
         assert location
+        assert self.metadata is not None
         return self.metadata.dump(os.path.join(location, self.METAFILE_NAME))

@@ -102,7 +102,7 @@ class InoToCPPConverter:
         return "\n".join(["#include <Arduino.h>"] + lines) if lines else None
 
     def process(self, contents):
-        out_file = re.sub(r"[\"\'\;]+", "", self._main_ino) + ".cpp"
+        out_file = re.sub(r"[\"\'\;]+", "", self._main_ino) + ".cpp"  # type: ignore
         assert self._gcc_preprocess(contents, out_file)
         contents = self.read_safe_contents(out_file)
         contents = self._join_multiline_strings(contents)
@@ -148,7 +148,7 @@ class InoToCPPConverter:
                 newlines[len(newlines) - 1] += line
                 stropen = False
                 newlines.append(
-                    '#line %d "%s"' % (linenum, self._main_ino.replace("\\", "/"))
+                    '#line %d "%s"' % (linenum, self._main_ino.replace("\\", "/"))  # type: ignore
                 )
                 continue
 
@@ -212,7 +212,7 @@ class InoToCPPConverter:
             '#line %d "%s"'
             % (
                 self._get_total_lines(contents[:split_pos]),
-                self._main_ino.replace("\\", "/"),
+                self._main_ino.replace("\\", "/"),  # type: ignore
             )
         )
         result.append(contents[split_pos:].strip())

@@ -40,14 +40,14 @@ class ManifestFileType:
 
     @classmethod
     def from_uri(cls, uri):
-        for t in sorted(cls.items().values()):
+        for t in sorted(cls.items().values()):  # type: ignore
             if uri.endswith(t):
                 return t
         return None
 
     @classmethod
     def from_dir(cls, path):
-        for t in sorted(cls.items().values()):
+        for t in sorted(cls.items().values()):  # type: ignore
             if os.path.isfile(os.path.join(path, t)):
                 return t
         return None
@@ -63,7 +63,7 @@ class ManifestParserFactory:
                     return fp.read()
             except UnicodeDecodeError as exc:
                 last_err = exc
-        raise last_err
+        raise last_err  # type: ignore
 
     @classmethod
     def new_from_file(cls, path, remote_url=False):
@@ -114,11 +114,11 @@ class ManifestParserFactory:
     def new_from_archive(path):
         assert path.endswith("tar.gz")
         with tarfile.open(path, mode="r:gz") as tf:
-            for t in sorted(ManifestFileType.items().values()):
+            for t in sorted(ManifestFileType.items().values()):  # type: ignore
                 for member in (t, "./" + t):
                     try:
                         return ManifestParserFactory.new(
-                            tf.extractfile(member).read().decode(), t
+                            tf.extractfile(member).read().decode(), t  # type: ignore
                         )
                     except KeyError:
                         pass
@@ -133,7 +133,7 @@ class ManifestParserFactory:
                 inspect.isclass(cls)
                 and issubclass(cls, BaseManifestParser)
                 and cls != BaseManifestParser
-                and cls.manifest_type == type
+                and cls.manifest_type == type  # type: ignore
             ):
                 return cls(contents, remote_url, package_dir)
         raise UnknownManifestError("Unknown manifest file type %s" % type)
@@ -443,7 +443,7 @@ class ModuleJsonManifestParser(BaseManifestParser):
             name, email = self.parse_author_name_and_email(author)
             if not name:
                 continue
-            result.append(self.cleanup_author(dict(name=name, email=email)))
+            result.append(self.cleanup_author({"name": name, "email": email}))
         return result
 
     @staticmethod
@@ -456,7 +456,7 @@ class ModuleJsonManifestParser(BaseManifestParser):
     def _parse_dependencies(raw):
         if isinstance(raw, dict):
             return [
-                dict(name=name, version=version, frameworks=["mbed"])
+                {"name": name, "version": version, "frameworks": ["mbed"]}
                 for name, version in raw.items()
             ]
         raise ManifestParserError("Invalid dependencies format, should be a dictionary")
@@ -636,7 +636,7 @@ class LibraryPropertiesManifestParser(BaseManifestParser):
                     "frameworks": ["arduino"],
                 })
             else:
-                result.append(dict(name=item, frameworks=["arduino"]))
+                result.append({"name": item, "frameworks": ["arduino"]})
         return result
 
 
@@ -707,7 +707,7 @@ class PackageJsonManifestParser(BaseManifestParser):
     def _parse_repository(data):
         if isinstance(data.get("repository", {}), dict):
             return data
-                    data["repository"] = {"type": "git", "url": str(data["repository"])}
+        data["repository"] = {"type": "git", "url": str(data["repository"])}
         if data["repository"]["url"].startswith(("github:", "gitlab:", "bitbucket:")):
             data["repository"]["url"] = "https://{0}.com/{1}".format(
                 *(data["repository"]["url"].split(":", 1))

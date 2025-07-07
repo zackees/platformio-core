@@ -41,7 +41,9 @@ if sys.version_info >= (3, 9):
     from asyncio import to_thread as aio_to_thread
 else:
     try:
-        from starlette.concurrency import run_in_threadpool as aio_to_thread
+        from starlette.concurrency import (
+            run_in_threadpool as aio_to_thread,  # type: ignore
+        )
     except ImportError:
         pass
 
@@ -93,8 +95,8 @@ def hashlib_encode_data(data):
 
 def load_python_module(name, pathname):
     spec = importlib.util.spec_from_file_location(name, pathname)
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
+    module = importlib.util.module_from_spec(spec)  # type: ignore
+    spec.loader.exec_module(module)  # type: ignore
     return module
 
 

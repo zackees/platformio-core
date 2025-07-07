@@ -34,7 +34,7 @@ class RegistryClient(HTTPClient):
         try:
             info = AccountClient().get_account_info() or {}
             for item in info.get("packages", []):
-                if set(item.keys()) & private_permissions:
+                if set(item.keys()) & private_permissions:  # type: ignore
                     return True
         except AccountError:
             pass
@@ -129,7 +129,7 @@ class RegistryClient(HTTPClient):
             search_query.append(query)
         params = {"query": " ".join(search_query)}
         if page:
-            params["page"] = int(page)
+            params["page"] = int(page)  # type: ignore
         if sort:
             params["sort"] = sort
         return self.fetch_json_data(

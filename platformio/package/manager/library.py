@@ -52,7 +52,7 @@ class LibraryPackageManager(BasePackageManager):  # pylint: disable=too-many-anc
             json.dump({
                 "name": spec.name,
                 "version": self.generate_rand_version(),
-            },
+            }, fp)
 
         return root_dir
 
@@ -86,7 +86,7 @@ class LibraryPackageManager(BasePackageManager):  # pylint: disable=too-many-anc
         return None
 
     @staticmethod
-    @util.memoized(expire="60s")
+    @util.memoized(expire="60s")  # type: ignore
     def get_builtin_libs(storage_names=None):
         # pylint: disable=import-outside-toplevel
         from platformio.package.manager.platform import PlatformPackageManager
@@ -94,7 +94,7 @@ class LibraryPackageManager(BasePackageManager):  # pylint: disable=too-many-anc
         items = []
         storage_names = storage_names or []
         pm = PlatformPackageManager()
-        for pkg in pm.get_installed():
+        for pkg in pm.get_installed():  # type: ignore
             p = PlatformFactory.new(pkg)
             for storage in p.get_lib_storages():
                 if storage_names and storage["name"] not in storage_names:

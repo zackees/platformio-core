@@ -17,7 +17,7 @@ import tarfile
 from binascii import crc32
 from os.path import getmtime, getsize, isdir, isfile, join
 
-from twisted.python import constants  # pylint: disable=import-error
+from twisted.python import constants  # type: ignore
 
 from platformio.compat import hashlib_encode_data
 
@@ -63,7 +63,7 @@ class ProjectSync:
         if not isfile(path):
             return
         index_hash = "%s-%s-%s" % (relpath, getmtime(path), getsize(path))
-        index = crc32(hashlib_encode_data(index_hash))
+        index = crc32(hashlib_encode_data(index_hash))  # type: ignore
         self._db[index] = (path, relpath)
 
     def get_dbindex(self):

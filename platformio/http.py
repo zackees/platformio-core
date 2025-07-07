@@ -51,7 +51,7 @@ class HTTPSession(requests.Session):
         super().__init__(*args, **kwargs)
         self.headers.update({"User-Agent": app.get_user_agent()})
         try:
-            self.verify = app.get_setting("enable_proxy_strict_ssl")
+            self.verify = app.get_setting("enable_proxy_strict_ssl")  # type: ignore
         except PlatformioException:
             self.verify = True
 
@@ -187,7 +187,7 @@ class HTTPClient:
 #
 
 
-@util.memoized(expire="10s")
+@util.memoized(expire="10s")  # type: ignore
 def _internet_on():
     timeout = 2
     use_proxy = is_proxy_set()

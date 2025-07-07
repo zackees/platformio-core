@@ -16,9 +16,9 @@ import hashlib
 import os
 import re
 
-from SCons.Platform import TempFileMunge  # pylint: disable=import-error
-from SCons.Script import COMMAND_LINE_TARGETS  # pylint: disable=import-error
-from SCons.Subst import quote_spaces  # pylint: disable=import-error
+from SCons.Platform import TempFileMunge  # type: ignore
+from SCons.Script import COMMAND_LINE_TARGETS  # type: ignore
+from SCons.Subst import quote_spaces  # type: ignore
 
 from platformio.compat import IS_WINDOWS, hashlib_encode_data
 

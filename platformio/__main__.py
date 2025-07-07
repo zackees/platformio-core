@@ -41,7 +41,7 @@ def cli(ctx, force, caller, no_ansi):  # pylint: disable=unused-argument
             == "true"
         ):
             # pylint: disable=protected-access
-            click._compat.isatty = lambda stream: False
+            click._compat.isatty = lambda stream: False  # type: ignore
         elif (
             str(
                 os.getenv("PLATFORMIO_FORCE_ANSI", os.getenv("PLATFORMIO_FORCE_COLOR"))
@@ -49,7 +49,7 @@ def cli(ctx, force, caller, no_ansi):  # pylint: disable=unused-argument
             == "true"
         ):
             # pylint: disable=protected-access
-            click._compat.isatty = lambda stream: True
+            click._compat.isatty = lambda stream: True  # type: ignore
     except Exception:  # pylint: disable=bare-except
         pass
 

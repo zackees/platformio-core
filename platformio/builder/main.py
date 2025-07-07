@@ -18,7 +18,7 @@ import sys
 from time import time
 
 import click
-from SCons.Script import (  # pylint: disable=import-error
+from SCons.Script import (  # type: ignore
     ARGUMENTS,
     COMMAND_LINE_TARGETS,
     DEFAULT_TARGETS,
@@ -139,7 +139,7 @@ env.Replace(
 
 if int(ARGUMENTS.get("ISATTY", 0)):
     # pylint: disable=protected-access
-    click._compat.isatty = lambda stream: True
+    click._compat.isatty = lambda stream: True  # type: ignore
 
 if env.subst("$BUILD_CACHE_DIR"):
     if not os.path.isdir(env.subst("$BUILD_CACHE_DIR")):
@@ -221,10 +221,10 @@ if env.IsIntegrationDump():
         Import("projenv")
     except Exception:  # pylint: disable=bare-except
         projenv = env
-    data = projenv.DumpIntegrationData(env)
+    data = projenv.DumpIntegrationData(env)  # type: ignore
     # dump to file for the further reading by project.helpers.load_build_metadata
     with open(
-        projenv.subst(os.path.join("$BUILD_DIR", "idedata.json")),
+        projenv.subst(os.path.join("$BUILD_DIR", "idedata.json")),  # type: ignore
         mode="w",
         encoding="utf8",
     ) as fp:

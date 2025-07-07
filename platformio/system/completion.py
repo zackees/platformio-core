@@ -71,7 +71,7 @@ def is_completion_code_installed(shell, path):
 
 
 def install_completion_code(shell, path):
-    if shell == ShellType.BASH and get_bash_version() < (4, 4):
+    if shell == ShellType.BASH and get_bash_version() < (4, 4):  # type: ignore
         raise click.ClickException("The minimal supported Bash version is 4.4")
     if is_completion_code_installed(shell, path):
         return None

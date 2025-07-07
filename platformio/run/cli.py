@@ -293,7 +293,7 @@ def print_processing_summary(results, verbose=False):
                 click.style(s, bold=True) for s in ("Environment", "Status", "Duration")
             ],
         ),
-        err=failed_nums,
+        err=failed_nums,  # type: ignore
     )
 
     util.print_labeled_bar(
@@ -303,14 +303,14 @@ def print_processing_summary(results, verbose=False):
             succeeded_nums,
             util.humanize_duration_time(duration),
         ),
-        is_error=failed_nums,
+        is_error=failed_nums,  # type: ignore
         fg="red" if failed_nums else "green",
     )
 
 
 def print_target_list(envs):
     tabular_data = []
-    for env, data in load_build_metadata(os.getcwd(), envs).items():
+    for env, data in load_build_metadata(os.getcwd(), envs).items():  # type: ignore
         tabular_data.extend(
             sorted(
                 [

@@ -55,7 +55,7 @@ class memoized:
                 self.cache[key] = (time.time(), func(*args, **kwargs))
             return self.cache[key][1]
 
-        wrapper.reset = self._reset
+        wrapper.reset = self._reset  # type: ignore
         return wrapper
 
     def _reset(self):
@@ -210,4 +210,4 @@ def humanize_duration_time(duration):
 
 def strip_ansi_codes(text):
     # pylint: disable=protected-access
-    return click._compat.strip_ansi(text)
+    return click._compat.strip_ansi(text) # type: ignore

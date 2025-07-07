@@ -229,7 +229,7 @@ class AccountClient(HTTPClient):  # pylint:disable=too-many-public-methods
         return result
 
     def get_logged_username(self):
-        return self.get_account_info(offline=True).get("profile").get("username")
+        return self.get_account_info(offline=True).get("profile").get("username")  # type: ignore
 
     def destroy_account(self):
         return self.fetch_json_data(

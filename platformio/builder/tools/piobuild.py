@@ -16,9 +16,9 @@ import fnmatch
 import os
 import sys
 
-from SCons import Builder, Util  # pylint: disable=import-error
-from SCons.Node import FS  # pylint: disable=import-error
-from SCons.Script import (  # pylint: disable=import-error
+from SCons import Builder, Util  # type: ignore
+from SCons.Node import FS  # type: ignore
+from SCons.Script import (  # type: ignore
     COMMAND_LINE_TARGETS,
     AlwaysBuild,
     DefaultEnvironment,
@@ -221,7 +221,7 @@ def ParseFlagsExtended(env, flags):  # pylint: disable=too-many-branches
     # fix relative LIBs
     for i, _l in enumerate(result.get("LIBS", [])):
         if isinstance(_l, FS.File):
-            result["LIBS"][i] = os.path.abspath(l.get_path())
+            result["LIBS"][i] = os.path.abspath(_l.get_path())
 
     # fix relative path for "-include"
     for i, f in enumerate(result.get("CCFLAGS", [])):

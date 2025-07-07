@@ -6,6 +6,6 @@
 # Run the linters.
 uv run ruff check --fix platformio
 
-uv run bin/isort platformio
+uv run isort platformio
 
 uv run pyright platformio

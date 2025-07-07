@@ -15,9 +15,9 @@
 import glob
 import os
 
-import SCons.Defaults  # pylint: disable=import-error
-import SCons.Subst  # pylint: disable=import-error
-from SCons.Script import COMMAND_LINE_TARGETS  # pylint: disable=import-error
+import SCons.Defaults  # type: ignore
+import SCons.Subst  # type: ignore
+from SCons.Script import COMMAND_LINE_TARGETS  # type: ignore
 
 from platformio.proc import exec_command, where_is_program
 
@@ -70,8 +70,8 @@ def get_gcc_defines(env):
         return items
     if result["returncode"] != 0:
         return items
-    for line in result["out"].split("\n"):
-        tokens = line.strip().split(" ", 2)
+    for line in result["out"].split("\n"):  # type: ignore
+        tokens = line.strip().split(" ", 2)  # type: ignore
         if not tokens or tokens[0] != "#define":
             continue
         if len(tokens) > 2:

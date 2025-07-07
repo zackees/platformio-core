@@ -117,6 +117,7 @@ class ZIPArchiver(BaseArchiver):
         fs.change_filemtime(
             os.path.join(dest_dir, item.filename),
             mktime(item.date_time + (0, 0, 0))
+        )
 
     @staticmethod
     def is_link(_):  # pylint: disable=arguments-differ
@@ -194,7 +195,7 @@ class FileUnpacker:
             with click.progressbar(
                 items,
                 label=label,
-                update_min_steps=min(50, len(items) / 100),  # every 50 files or less
+                update_min_steps=min(50, len(items) // 100),  # every 50 files or less
             ) as pb:
                 for item in pb:
                     self._archiver.extract_item(item, dest_dir)

@@ -260,7 +260,7 @@ void unityOutputComplete(void) { unittest_uart_end(); }
             )
 
     def on_testing_line_output(self, line):
-        if self.options.verbose:
+        if self.options.verbose: # type: ignore
             click.echo(line, nl=False)
         line = strip_ansi_codes(line or "").strip()
         if not line:
@@ -269,7 +269,7 @@ void unityOutputComplete(void) { unittest_uart_end(); }
         test_case = self.parse_test_case(line)
         if test_case:
             self.test_suite.add_case(test_case)
-            if not self.options.verbose:
+            if not self.options.verbose: # type: ignore
                 click.echo(test_case.humanize())
 
         if all(s in line for s in ("Tests", "Failures", "Ignored")):
@@ -288,11 +288,11 @@ void unityOutputComplete(void) { unittest_uart_end(); }
         source = None
         if "source_file" in data:
             source = TestCaseSource(
-                filename=data["source_file"], line=int(data.get("source_line"))
+                filename=data["source_file"], line=int(data.get("source_line")) # type: ignore
             )
         return TestCase(
-            name=data.get("name").strip(),
-            status=TestStatus.from_string(data.get("status")),
+            name=data.get("name").strip(),  # type: ignore
+            status=TestStatus.from_string(data.get("status")),  # type: ignore
             message=(data.get("message") or "").strip() or None,
             stdout=line,
             source=source,

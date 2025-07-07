@@ -116,7 +116,7 @@ def platform_list(ctx, json_output):
 
     platforms = []
     pm = PlatformPackageManager()
-    for pkg in pm.get_installed():
+    for pkg in pm.get_installed():  # type: ignore
         platforms.append(
             _get_installed_platform_data(pkg, with_boards=False, expose_packages=False)
         )
@@ -253,7 +253,7 @@ def platform_update(  # pylint: disable=too-many-locals,too-many-arguments,too-m
     pm.set_log_level(logging.WARN if silent else logging.DEBUG)
     platforms = platforms or pm.get_installed()
     result = []
-    for platform in platforms:
+    for platform in platforms:  # type: ignore
         spec = None
         pkg = None
         if isinstance(platform, PackageItem):

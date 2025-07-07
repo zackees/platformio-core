@@ -18,7 +18,7 @@ import os
 import zlib
 from io import BytesIO
 
-from twisted.spread import pb  # pylint: disable=import-error
+from twisted.spread import pb  # type: ignore
 
 from platformio import fs
 from platformio.compat import hashlib_encode_data
@@ -58,7 +58,7 @@ class RunOrTestClient(AsyncClientBase):
         self.psync = ProjectSync(self.options["project_dir"])
 
     def generate_project_id(self, path):
-        h = hashlib.sha1(hashlib_encode_data(self.id))
+        h = hashlib.sha1(hashlib_encode_data(self.id))  # type: ignore
         h.update(hashlib_encode_data(path))
         return "%s-%s" % (os.path.basename(path), h.hexdigest())
 
@@ -130,7 +130,7 @@ class RunOrTestClient(AsyncClientBase):
 
     def psync_init(self):
         self.add_project_items(self.psync)
-        d = self.agentpool.callRemote(
+        d = self.agentpool.callRemote(  # type: ignore
             "cmd",
             self.agents,
             "psync",
@@ -149,7 +149,7 @@ class RunOrTestClient(AsyncClientBase):
                 raise pb.Error(value)
             agent_id, ac_id = value
             try:
-                d = self.agentpool.callRemote(
+                d = self.agentpool.callRemote(  # type: ignore
                     "acwrite",
                     agent_id,
                     ac_id,
@@ -179,7 +179,7 @@ class RunOrTestClient(AsyncClientBase):
             return self.psync_upload(agent_id, ac_id, delta)
 
         try:
-            d = self.agentpool.callRemote(
+            d = self.agentpool.callRemote(  # type: ignore
                 "acwrite",
                 agent_id,
                 ac_id,
@@ -219,7 +219,7 @@ class RunOrTestClient(AsyncClientBase):
         chunk = fileobj.read(self.UPLOAD_CHUNK_SIZE)
         assert chunk
         try:
-            d = self.agentpool.callRemote(
+            d = self.agentpool.callRemote(  # type: ignore
                 "acwrite",
                 agent_id,
                 ac_id,
@@ -253,7 +253,7 @@ class RunOrTestClient(AsyncClientBase):
 
     def psync_finalize(self, agent_id, ac_id):
         try:
-            d = self.agentpool.callRemote("acclose", agent_id, ac_id)
+            d = self.agentpool.callRemote("acclose", agent_id, ac_id)  # type: ignore
             d.addCallback(self.cb_psync_completed_result, agent_id)
             d.addErrback(self.cb_global_error)
         except (AttributeError, pb.DeadReferenceError):
@@ -264,6 +264,6 @@ class RunOrTestClient(AsyncClientBase):
         options = self.options.copy()
         del options["project_dir"]
         options["project_id"] = self.project_id
-        d = self.agentpool.callRemote("cmd", [agent_id], self.command, options)
+        d = self.agentpool.callRemote("cmd", [agent_id], self.command, options)  # type: ignore
         d.addCallback(self.cb_async_result)
         d.addErrback(self.cb_global_error)

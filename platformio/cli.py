@@ -24,7 +24,7 @@ class PlatformioCLI(click.MultiCommand):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self._pio_root_path = Path(__file__).parent
-        self._pio_cmd_aliases = dict(package="pkg")
+        self._pio_cmd_aliases = {"package": "pkg"}
 
     def _find_pio_commands(self):
         def _to_module_path(p):
@@ -85,7 +85,7 @@ class PlatformioCLI(click.MultiCommand):
         return super().invoke(ctx)
 
     def list_commands(self, ctx):
-        return sorted(list(self._find_pio_commands()))
+        return sorted(self._find_pio_commands())
 
     def get_command(self, ctx, cmd_name):
         commands = self._find_pio_commands()

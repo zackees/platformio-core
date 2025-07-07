@@ -182,7 +182,7 @@ def log_command(ctx):
         "path_args": PlatformioCLI.reveal_cmd_path_args(ctx),
     }
     if is_ci():
-        params["ci_actor"] = resolve_ci_actor() or "Unknown"
+        params["ci_actor"] = resolve_ci_actor() or "Unknown" # type: ignore
     log_event("cmd_run", params)
 
 
@@ -331,7 +331,7 @@ def load_postponed_events():
     if not os.path.isfile(state_path):
         return []
     with app.State(state_path) as state:
-        return state.get("events", [])
+        return state.get("events", [])  # type: ignore
 
 
 def save_postponed_events(events):

@@ -46,8 +46,8 @@ def cli(ctx, agent):
     # inject twisted dependencies
     contrib_dir = get_core_package_dir("contrib-pioremote")
     if contrib_dir not in sys.path:
-        addsitedir(contrib_dir)
-        sys.path.insert(0, contrib_dir)
+        addsitedir(contrib_dir)  # type: ignore
+        sys.path.insert(0, contrib_dir)  # type: ignore
 
 
 @cli.group("agent", short_help="Start a new agent or list active")

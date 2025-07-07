@@ -63,16 +63,16 @@ def system_info_cmd(json_output):
     }
     data["global_lib_nums"] = {
         "title": "Global Libraries",
-        "value": len(LibraryPackageManager().get_installed()),
+        "value": len(LibraryPackageManager().get_installed()),  # type: ignore
     }
     data["dev_platform_nums"] = {
         "title": "Development Platforms",
-        "value": len(PlatformPackageManager().get_installed()),
+        "value": len(PlatformPackageManager().get_installed()),  # type: ignore
     }
     data["package_tool_nums"] = {
         "title": "Tools & Toolchains",
         "value": len(
-            ToolPackageManager(
+            ToolPackageManager(  # type: ignore
                 project_config.get("platformio", "packages_dir")
             ).get_installed()
         ),
