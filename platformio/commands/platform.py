@@ -298,19 +298,19 @@ def _get_platform_data(*args, **kwargs):
 
 def _get_installed_platform_data(platform, with_boards=True, expose_packages=True):
     p = PlatformFactory.new(platform)
-    data = dict(
-        name=p.name,
-        title=p.title,
-        description=p.description,
-        version=p.version,
-        homepage=p.homepage,
-        url=p.homepage,
-        repository=p.repository_url,
-        license=p.license,
-        forDesktop=not p.is_embedded(),
-        frameworks=sorted(list(p.frameworks) if p.frameworks else []),
-        packages=list(p.packages) if p.packages else [],
-    )
+    data = {
+        "name": p.name,
+        "title": p.title,
+        "description": p.description,
+        "version": p.version,
+        "homepage": p.homepage,
+        "url": p.homepage,
+        "repository": p.repository_url,
+        "license": p.license,
+        "forDesktop": not p.is_embedded(),
+        "frameworks": sorted(list(p.frameworks) if p.frameworks else []),
+        "packages": list(p.packages) if p.packages else [],
+    }
 
     # if dump to API
     # del data['version']
@@ -336,12 +336,12 @@ def _get_installed_platform_data(platform, with_boards=True, expose_packages=Tru
         pkg.metadata.name: p.pm.load_manifest(pkg) for pkg in p.get_installed_packages()
     }
     for name, options in p.packages.items():
-        item = dict(
-            name=name,
-            type=p.get_package_type(name),
-            requirements=options.get("version"),
-            optional=options.get("optional") is True,
-        )
+        item = {
+            "name": name,
+            "type": p.get_package_type(name),
+            "requirements": options.get("version"),
+            "optional": options.get("optional") is True,
+        }
         if name in installed_pkgs:
             for key, value in installed_pkgs[name].items():
                 if key not in ("url", "version", "description"):
@@ -366,20 +366,20 @@ def _get_registry_platform_data(  # pylint: disable=unused-argument
     if not _data:
         return None
 
-    data = dict(
-        ownername=_data.get("ownername"),
-        name=_data["name"],
-        title=_data["title"],
-        description=_data["description"],
-        homepage=_data["homepage"],
-        repository=_data["repository"],
-        url=_data["url"],
-        license=_data["license"],
-        forDesktop=_data["forDesktop"],
-        frameworks=_data["frameworks"],
-        packages=_data["packages"],
-        versions=_data.get("versions"),
-    )
+    data = {
+        "ownername": _data.get("ownername"),
+        "name": _data["name"],
+        "title": _data["title"],
+        "description": _data["description"],
+        "homepage": _data["homepage"],
+        "repository": _data["repository"],
+        "url": _data["url"],
+        "license": _data["license"],
+        "forDesktop": _data["forDesktop"],
+        "frameworks": _data["frameworks"],
+        "packages": _data["packages"],
+        "versions": _data.get("versions"),
+    }
 
     if with_boards:
         data["boards"] = [

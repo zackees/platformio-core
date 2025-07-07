@@ -284,13 +284,13 @@ class PackageSpec:  # pylint: disable=too-many-instance-attributes
         return self._name_is_custom
 
     def as_dict(self):
-        return dict(
-            owner=self.owner,
-            id=self.id,
-            name=self.name,
-            requirements=str(self.requirements) if self.requirements else None,
-            uri=self.uri,
-        )
+        return {
+            "owner": self.owner,
+            "id": self.id,
+            "name": self.name,
+            "requirements": str(self.requirements) if self.requirements else None,
+            "uri": self.uri,
+        }
 
     def as_dependency(self):
         if self.uri:
@@ -479,12 +479,12 @@ class PackageMetadata:
         )
 
     def as_dict(self):
-        return dict(
-            type=self.type,
-            name=self.name,
-            version=str(self.version),
-            spec=self.spec.as_dict() if self.spec else None,
-        )
+        return {
+            "type": self.type,
+            "name": self.name,
+            "version": str(self.version),
+            "spec": self.spec.as_dict() if self.spec else None,
+        }
 
     def dump(self, path):
         with open(path, mode="w", encoding="utf8") as fp:

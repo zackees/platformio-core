@@ -107,7 +107,7 @@ class LineBufferedAsyncPipe(AsyncPipeBase):
 def exec_command(*args, **kwargs):
     result = {"out": None, "err": None, "returncode": None}
 
-    default = dict(stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    default = {"stdout": subprocess.PIPE, "stderr": subprocess.PIPE}
     default.update(kwargs)
     kwargs = default
 

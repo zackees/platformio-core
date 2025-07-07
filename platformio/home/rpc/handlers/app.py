@@ -56,13 +56,11 @@ class AppRPC(BaseRPCHandler):
             storage["projectsDir"] = storage["coreSettings"]["projects_dir"]["value"]
 
             # skip non-existing recent projects
-            storage["recentProjects"] = list(
-                set(
-                    str(Path(p).resolve())
-                    for p in storage.get("recentProjects", [])
-                    if is_platformio_project(p)
-                )
-            )
+            storage["recentProjects"] = {
+                str(Path(p).resolve())
+                for p in storage.get("recentProjects", [])
+                if is_platformio_project(p)
+            }
 
             state["storage"] = storage
             state.modified = False  # skip saving extra fields

@@ -18,7 +18,7 @@ import re
 import time
 from glob import glob
 
-from platformio import __version__, exception, proc
+from platformio import exception, proc
 from platformio.compat import IS_MACOS, IS_WINDOWS
 
 

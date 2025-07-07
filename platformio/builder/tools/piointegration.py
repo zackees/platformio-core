@@ -23,11 +23,11 @@ from platformio.proc import exec_command, where_is_program
 
 
 def IsIntegrationDump(_):
-    return set(["__idedata", "idedata"]) & set(COMMAND_LINE_TARGETS)
+    return {"__idedata", "idedata"} & set(COMMAND_LINE_TARGETS)
 
 
 def DumpIntegrationIncludes(env):
-    result = dict(build=[], compatlib=[], toolchain=[])
+    result = {"build": [], "compatlib": [], "toolchain": []}
 
     # `env`(project) CPPPATH
     result["build"].extend(
@@ -163,12 +163,12 @@ def DumpIntegrationData(*args):
         "svd_path": dump_svd_path(globalenv),
         "compiler_type": globalenv.GetCompilerType(),
         "targets": globalenv.DumpTargets(),
-        "extra": dict(
-            flash_images=[
+        "extra": {
+            "flash_images": [
                 {"offset": item[0], "path": globalenv.subst(item[1])}
                 for item in globalenv.get("FLASH_EXTRA_IMAGES", [])
             ]
-        ),
+        },
     }
     for key in ("IDE_EXTRA_DATA", "INTEGRATION_EXTRA_DATA"):
         data["extra"].update(globalenv.get(key, {}))

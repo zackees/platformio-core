@@ -126,7 +126,7 @@ class ProjectConfigBase:
         renamed_options = {}
         for option in ProjectOptions.values():
             if option.oldnames:
-                renamed_options.update({name: option.name for name in option.oldnames})
+                renamed_options.update(dict.fromkeys(option.oldnames, option.name))
 
         for section in self._parser.sections():
             scope = self.get_section_scope(section)
@@ -313,7 +313,7 @@ class ProjectConfigBase:
         return self._expand_interpolations(section, option, value)
 
     def _expand_interpolations(self, section, option, value):
-        if not value or not isinstance(value, string_types) or not "$" in value:
+        if not value or not isinstance(value, string_types) or "$" not in value:
             return value
 
         # legacy support for variables delclared without "${}"
@@ -486,7 +486,7 @@ class ProjectConfigLintMixin:
                     item[attr] = getattr(exc, attr)
 
             if item["type"] == "ParsingError" and hasattr(exc, "errors"):
-                for lineno, line in getattr(exc, "errors"):
+                for lineno, line in exc.errors:
                     errors.append(
                         {
                             "type": item["type"],

@@ -97,7 +97,7 @@ class ProjectSync:
     def compress_items(self, fileobj, dbindex, max_size):
         compressed = []
         total_size = 0
-        tar_opts = dict(fileobj=fileobj, mode="w:gz", bufsize=0, dereference=True)
+        tar_opts = {"fileobj": fileobj, "mode": "w:gz", "bufsize": 0, "dereference": True}
         with tarfile.open(**tar_opts) as tgz:
             for index in dbindex:
                 compressed.append(index)

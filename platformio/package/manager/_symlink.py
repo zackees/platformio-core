@@ -57,7 +57,7 @@ class PackageManagerSymlinkMixin:
             "%s.pio-link" % (spec.name or os.path.basename(os.path.abspath(pkg_dir))),
         )
         with open(link_path, mode="w", encoding="utf-8") as fp:
-            json.dump(dict(cwd=os.getcwd(), spec=spec.as_dict()), fp)
+            json.dump({"cwd": os.getcwd(), "spec": spec.as_dict()}, fp)
         return self.get_symlinked_package(link_path)
 
     def uninstall_symlink(self, spec):

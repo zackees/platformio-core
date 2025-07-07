@@ -46,10 +46,10 @@ def project_metadata_cmd(project_dir, environments, json_output, json_output_pat
 
     if not json_output:
         install_project_dependencies(
-            options=dict(
-                project_dir=project_dir,
-                environments=environments,
-            )
+            options={
+                "project_dir": project_dir,
+                "environments": environments,
+            }
         )
         click.echo()
 

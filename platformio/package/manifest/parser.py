@@ -273,11 +273,11 @@ class BaseManifestParser:
 
             if is_platformio_project(root):
                 last_pio_project = root
-                result[last_pio_project] = dict(
-                    name=os.path.relpath(root, examples_dir),
-                    base=os.path.relpath(root, package_dir),
-                    files=files,
-                )
+                result[last_pio_project] = {
+                    "name": os.path.relpath(root, examples_dir),
+                    "base": os.path.relpath(root, package_dir),
+                    "files": files,
+                }
                 continue
             if last_pio_project:
                 if root.startswith(last_pio_project):
@@ -293,15 +293,15 @@ class BaseManifestParser:
             matched_files = [f for f in files if f.endswith(allowed_exts)]
             if not matched_files:
                 continue
-            result[root] = dict(
-                name=(
+            result[root] = {
+                "name": (
                     "Examples"
                     if root == examples_dir
                     else os.path.relpath(root, examples_dir)
                 ),
-                base=os.path.relpath(root, package_dir),
-                files=matched_files,
-            )
+                "base": os.path.relpath(root, package_dir),
+                "files": matched_files,
+            }
 
         result = list(result.values())
 
@@ -393,9 +393,9 @@ class LibraryJsonManifestParser(BaseManifestParser):
             for name, version in raw.items():
                 if "/" in name:
                     owner, name = name.split("/", 1)
-                    result.append(dict(owner=owner, name=name, version=version))
+                    result.append({"owner": owner, "name": name, "version": version})
                 else:
-                    result.append(dict(name=name, version=version))
+                    result.append({"name": name, "version": version})
             return result
 
         if isinstance(raw, list):
@@ -472,15 +472,15 @@ class LibraryPropertiesManifestParser(BaseManifestParser):
         if repository and repository["url"] == homepage:
             homepage = None
         data.update(
-            dict(
-                frameworks=["arduino"],
-                homepage=homepage,
-                repository=repository or None,
-                description=self._parse_description(data),
-                platforms=self._parse_platforms(data) or None,
-                keywords=self._parse_keywords(data) or None,
-                export=self._parse_export(),
-            )
+            {
+                "frameworks": ["arduino"],
+                "homepage": homepage,
+                "repository": repository or None,
+                "description": self._parse_description(data),
+                "platforms": self._parse_platforms(data) or None,
+                "keywords": self._parse_keywords(data) or None,
+                "export": self._parse_export(),
+            }
         )
         if "includes" in data:
             data["headers"] = self.str_to_list(data["includes"], sep=",", unique=True)
@@ -565,7 +565,7 @@ class LibraryPropertiesManifestParser(BaseManifestParser):
             name, email = self.parse_author_name_and_email(author)
             if not name:
                 continue
-            authors.append(self.cleanup_author(dict(name=name, email=email)))
+            authors.append(self.cleanup_author({"name": name, "email": email}))
         for author in properties.get("maintainer", "").split(","):
             name, email = self.parse_author_name_and_email(author)
             if not name:
@@ -580,9 +580,7 @@ class LibraryPropertiesManifestParser(BaseManifestParser):
                 if not item.get("email") and email and "@" in email:
                     item["email"] = email
             if not found:
-                authors.append(
-                    self.cleanup_author(dict(name=name, email=email, maintainer=True))
-                )
+                authors.append(self.cleanup_author({"name": name, "email": email, "maintainer": True}))
         return authors
 
     def _parse_repository(self, properties):
@@ -590,21 +588,21 @@ class LibraryPropertiesManifestParser(BaseManifestParser):
             url_attrs = urlparse(self.remote_url)
             repo_path_tokens = url_attrs.path[1:].split("/")[:-1]
             if "github" in url_attrs.netloc:
-                return dict(
-                    type="git",
-                    url="https://github.com/" + "/".join(repo_path_tokens[:2]),
-                )
+                return {
+                    "type": "git",
+                    "url": "https://github.com/" + "/".join(repo_path_tokens[:2]),
+                }
             if "raw" in repo_path_tokens:
-                return dict(
-                    type="git",
-                    url="https://%s/%s"
+                return {
+                    "type": "git",
+                    "url": "https://%s/%s"
                     % (
                         url_attrs.netloc,
                         "/".join(repo_path_tokens[: repo_path_tokens.index("raw")]),
                     ),
-                )
+                }
         if properties.get("url", "").startswith("https://github.com"):
-            return dict(type="git", url=properties["url"])
+            return {"type": "git", "url": properties["url"]}
         return None
 
     def _parse_export(self):
@@ -620,7 +618,7 @@ class LibraryPropertiesManifestParser(BaseManifestParser):
                     or None
                 )
         if include:
-            return dict(include=[include])
+            return {"include": [include]}
         return None
 
     @staticmethod
@@ -632,13 +630,11 @@ class LibraryPropertiesManifestParser(BaseManifestParser):
                 continue
             if item.endswith(")") and "(" in item:
                 name, version = item.split("(")
-                result.append(
-                    dict(
-                        name=name.strip(),
-                        version=version[:-1].strip(),
-                        frameworks=["arduino"],
-                    )
-                )
+                result.append({
+                    "name": name.strip(),
+                    "version": version[:-1].strip(),
+                    "frameworks": ["arduino"],
+                })
             else:
                 result.append(dict(name=item, frameworks=["arduino"]))
         return result
@@ -711,7 +707,7 @@ class PackageJsonManifestParser(BaseManifestParser):
     def _parse_repository(data):
         if isinstance(data.get("repository", {}), dict):
             return data
-        data["repository"] = dict(type="git", url=str(data["repository"]))
+                    data["repository"] = {"type": "git", "url": str(data["repository"])}
         if data["repository"]["url"].startswith(("github:", "gitlab:", "bitbucket:")):
             data["repository"]["url"] = "https://{0}.com/{1}".format(
                 *(data["repository"]["url"].split(":", 1))

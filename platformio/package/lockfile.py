@@ -57,7 +57,7 @@ class LockFile:
             if time() - os.path.getmtime(self._lock_path) > 10:
                 try:
                     os.remove(self._lock_path)
-                except:  # pylint: disable=bare-except
+                except Exception:  # pylint: disable=bare-except
                     pass
             else:
                 raise LockFileExists
@@ -104,7 +104,7 @@ class LockFile:
         if os.path.exists(self._lock_path):
             try:
                 os.remove(self._lock_path)
-            except:  # pylint: disable=bare-except
+            except Exception:  # pylint: disable=bare-except
                 pass
 
     def __enter__(self):

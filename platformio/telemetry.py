@@ -24,7 +24,7 @@ from collections import deque
 
 import requests
 
-from platformio import __title__, __version__, app, exception, fs, util
+from platformio import app, exception, fs, util
 from platformio.cli import PlatformioCLI
 from platformio.debug.config.base import DebugConfigBase
 from platformio.http import HTTPSession
@@ -143,7 +143,7 @@ class TelemetryLogger:
             # skip Bad Request
             if exc.response.status_code >= 400 and exc.response.status_code < 500:
                 return True
-        except:  # pylint: disable=bare-except
+        except Exception:  # pylint: disable=bare-except
             pass
         self._http_offline = True
         return False
@@ -340,7 +340,7 @@ def save_postponed_events(events):
         try:
             if os.path.isfile(state_path):
                 os.remove(state_path)
-        except:  # pylint: disable=bare-except
+        except Exception:  # pylint: disable=bare-except
             pass
         return None
     with app.State(state_path, lock=True) as state:
@@ -369,7 +369,7 @@ def process_postponed_logs():
     save_postponed_events([])  # clean
     telemetry = TelemetryLogger()
     for event in events:
-        if set(["name", "params", "timestamp"]) <= set(event.keys()):
+        if {"name", "params", "timestamp"} <= set(event.keys()):
             telemetry.log_event(
                 event["name"],
                 event["params"],

@@ -89,9 +89,7 @@ class RunOrTestClient(AsyncClientBase):
         psync.add_item(
             cfg.get("platformio", "src_dir"), "src", cb_filter=self._cb_tarfile_filter
         )
-        if set(["buildfs", "uploadfs", "uploadfsota"]) & set(
-            self.options.get("target", [])
-        ):
+        if {"buildfs", "uploadfs", "uploadfsota"} & set(self.options.get("target", [])):
             psync.add_item(cfg.get("platformio", "data_dir"), "data")
 
     @staticmethod
@@ -136,7 +134,7 @@ class RunOrTestClient(AsyncClientBase):
             "cmd",
             self.agents,
             "psync",
-            dict(id=self.project_id, items=[i[1] for i in self.psync.get_items()]),
+            {"id": self.project_id, "items": [i[1] for i in self.psync.get_items()]},
         )
         d.addCallback(self.cb_psync_init_result)
         d.addErrback(self.cb_global_error)
@@ -155,7 +153,7 @@ class RunOrTestClient(AsyncClientBase):
                     "acwrite",
                     agent_id,
                     ac_id,
-                    dict(stage=PROJECT_SYNC_STAGE.DBINDEX.value),
+                    {"stage": PROJECT_SYNC_STAGE.DBINDEX.value},
                 )
                 d.addCallback(self.cb_psync_dbindex_result, agent_id, ac_id)
                 d.addErrback(self.cb_global_error)
@@ -185,10 +183,10 @@ class RunOrTestClient(AsyncClientBase):
                 "acwrite",
                 agent_id,
                 ac_id,
-                dict(
-                    stage=PROJECT_SYNC_STAGE.DELETE.value,
-                    dbindex=zlib.compress(json.dumps(delete).encode()),
-                ),
+                {
+                    "stage": PROJECT_SYNC_STAGE.DELETE.value,
+                    "dbindex": zlib.compress(json.dumps(delete).encode()),
+                },
             )
             d.addCallback(self.cb_psync_delete_result, agent_id, ac_id, delta)
             d.addErrback(self.cb_global_error)
@@ -225,12 +223,12 @@ class RunOrTestClient(AsyncClientBase):
                 "acwrite",
                 agent_id,
                 ac_id,
-                dict(
-                    stage=PROJECT_SYNC_STAGE.UPLOAD.value,
-                    chunk=chunk,
-                    length=len(chunk),
-                    total=total,
-                ),
+                {
+                    "stage": PROJECT_SYNC_STAGE.UPLOAD.value,
+                    "chunk": chunk,
+                    "length": len(chunk),
+                    "total": total,
+                },
             )
             d.addCallback(
                 self.cb_psync_upload_chunk_result, agent_id, ac_id, dbindex, fileobj

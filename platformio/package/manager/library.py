@@ -49,26 +49,20 @@ class LibraryPackageManager(BasePackageManager):  # pylint: disable=too-many-anc
         with open(
             os.path.join(root_dir, "library.json"), mode="w", encoding="utf8"
         ) as fp:
-            json.dump(
-                dict(
-                    name=spec.name,
-                    version=self.generate_rand_version(),
-                ),
-                fp,
-                indent=2,
-            )
+            json.dump({
+                "name": spec.name,
+                "version": self.generate_rand_version(),
+            },
 
         return root_dir
 
     @staticmethod
     def find_library_root(path):
-        root_dir_signs = set(["include", "Include", "inc", "Inc", "src", "Src"])
-        root_file_signs = set(
-            [
-                "conanfile.py",  # Conan-based library
-                "CMakeLists.txt",  # CMake-based library
-            ]
-        )
+        root_dir_signs = {"include", "Include", "inc", "Inc", "src", "Src"}
+        root_file_signs = {
+            "conanfile.py",  # Conan-based library
+            "CMakeLists.txt",  # CMake-based library
+        }
         for root, dirs, files in os.walk(path):
             if not files and len(dirs) == 1:
                 continue

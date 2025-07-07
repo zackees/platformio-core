@@ -284,7 +284,7 @@ def get_host_id():
     try:
         username = getpass.getuser()
         h.update(hashlib_encode_data(username))
-    except:  # pylint: disable=bare-except
+    except Exception:  # pylint: disable=bare-except
         pass
     return h.hexdigest()
 

@@ -37,7 +37,7 @@ def test_pkg_specified(clirunner, validate_cliresult, isolated_pio_core):
     result = clirunner.invoke(
         package_exec_cmd,
         ["-p", "platformio/tool-openocd", "--", "openocd", "--version"],
-        obj=dict(force_click_stream=True),
+        obj={"force_click_stream": True},
     )
     validate_cliresult(result)
     output = strip_ansi_codes(result.output)
@@ -50,7 +50,7 @@ def test_unrecognized_options(clirunner, validate_cliresult, isolated_pio_core):
     result = clirunner.invoke(
         package_exec_cmd,
         ["--", "openocd", "--test-unrecognized"],
-        obj=dict(force_click_stream=True),
+        obj={"force_click_stream": True},
     )
     with pytest.raises(
         AssertionError,

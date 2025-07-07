@@ -92,7 +92,7 @@ class PlatformioCLI(click.MultiCommand):
         if cmd_name not in commands:
             return self._handle_obsolate_command(ctx, cmd_name)
         module = importlib.import_module(commands[cmd_name])
-        return getattr(module, "cli")
+        return module.cli
 
     @staticmethod
     def _handle_obsolate_command(ctx, cmd_name):

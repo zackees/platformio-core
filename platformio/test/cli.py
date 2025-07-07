@@ -122,7 +122,7 @@ def cli(  # pylint: disable=too-many-arguments,too-many-positional-arguments,too
         test_suites = list_test_suites(
             project_config, environments=environment, filters=filter, ignores=ignore
         )
-        test_names = sorted(set(s.test_name for s in test_suites))
+        test_names = sorted({s.test_name for s in test_suites})
 
         if not verbose:
             click.echo("Verbosity level can be increased via `-v, -vv, or -vvv` option")

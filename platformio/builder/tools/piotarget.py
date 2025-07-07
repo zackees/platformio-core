@@ -74,9 +74,9 @@ def AddTarget(  # pylint: disable=too-many-arguments,too-many-positional-argumen
     if "__PIO_TARGETS" not in env:
         env["__PIO_TARGETS"] = {}
     assert name not in env["__PIO_TARGETS"]
-    env["__PIO_TARGETS"][name] = dict(
-        name=name, title=title, description=description, group=group
-    )
+    env["__PIO_TARGETS"][name] = {
+        "name": name, "title": title, "description": description, "group": group
+    }
     target = env.Alias(name, dependencies, actions)
     if always_build:
         AlwaysBuild(target)
@@ -97,7 +97,7 @@ def DumpTargets(env):
     if env.PioPlatform().is_embedded() and not any(
         t["group"] == "Platform" for t in targets.values()
     ):
-        targets["upload"] = dict(name="upload", group="Platform", title="Upload")
+        targets["upload"] = {"name": "upload", "group": "Platform", "title": "Upload"}
     return list(targets.values())
 
 

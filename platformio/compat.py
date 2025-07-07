@@ -24,11 +24,9 @@ import sys
 from platformio.exception import UserSideException
 
 if sys.version_info >= (3, 7):
-    from asyncio import create_task as aio_create_task
-    from asyncio import get_running_loop as aio_get_running_loop
+    pass
 else:
-    from asyncio import ensure_future as aio_create_task
-    from asyncio import get_event_loop as aio_get_running_loop
+    pass
 
 
 if sys.version_info >= (3, 8):

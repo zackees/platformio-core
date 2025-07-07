@@ -109,7 +109,7 @@ class HTTPClient:
             return
         try:
             self._session.close()
-        except:  # pylint: disable=bare-except
+        except Exception:  # pylint: disable=bare-except
             pass
         self._session = None
 
@@ -202,7 +202,7 @@ def _internet_on():
             s = socket.create_connection((host, 80))
             s.close()
             return True
-        except:  # pylint: disable=bare-except
+        except Exception:  # pylint: disable=bare-except
             pass
 
     # falling back to HTTPs, issue #4980

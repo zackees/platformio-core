@@ -111,7 +111,7 @@ class PvsStudioCheckTool(CheckToolBase):  # pylint: disable=too-many-instance-at
 
         try:
             defects_data = fromstring(report)
-        except:  # pylint: disable=bare-except
+        except Exception:  # pylint: disable=bare-except
             click.echo("Error: Couldn't decode generated report!")
             self._bad_input = True
             return []

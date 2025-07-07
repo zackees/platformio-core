@@ -167,12 +167,9 @@ class InoToCPPConverter:
 
     def _parse_prototypes(self, contents):
         prototypes = []
-        reserved_keywords = set(["if", "else", "while"])
+        reserved_keywords = {"if", "else", "while"}
         for match in self.PROTOTYPE_RE.finditer(contents):
-            if (
-                set([match.group(2).strip(), match.group(3).strip()])
-                & reserved_keywords
-            ):
+            if ({match.group(2).strip(), match.group(3).strip()} & reserved_keywords):
                 continue
             prototypes.append(match)
         return prototypes
@@ -192,13 +189,13 @@ class InoToCPPConverter:
         prototypes = self._parse_prototypes(contents) or []
 
         # skip already declared prototypes
-        declared = set(m.group(1).strip() for m in prototypes if m.group(4) == ";")
+        declared = {m.group(1).strip() for m in prototypes if m.group(4) == ";"}
         prototypes = [m for m in prototypes if m.group(1).strip() not in declared]
 
         if not prototypes:
             return contents
 
-        prototype_names = set(m.group(3).strip() for m in prototypes)
+        prototype_names = {m.group(3).strip() for m in prototypes}
         split_pos = prototypes[0].start()
         match_ptrs = re.search(
             self.PROTOPTRS_TPLRE % ("|".join(prototype_names)),
@@ -243,7 +240,7 @@ def _delete_file(path):
     try:
         if os.path.isfile(path):
             os.remove(path)
-    except:  # pylint: disable=bare-except
+    except Exception:  # pylint: disable=bare-except
         pass
 
 

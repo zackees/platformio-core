@@ -106,7 +106,7 @@ class DeviceMonitorClient(  # pylint: disable=too-many-instance-attributes
                 devices.append((agent_name, item))
 
         if len(result) == 1 and self.cmd_options["port"]:
-            if set(["*", "?", "[", "]"]) & set(self.cmd_options["port"]):
+            if {"*", "?", "[", "]"} & set(self.cmd_options["port"]):
                 for agent, item in devices:
                     if fnmatch(item["port"], self.cmd_options["port"]):
                         return self.start_remote_monitor(agent, item["port"])

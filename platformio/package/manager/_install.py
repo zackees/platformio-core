@@ -206,7 +206,7 @@ class PackageManagerInstallMixin:
             if os.path.isdir(tmp_dir):
                 try:
                     fs.rmtree(tmp_dir)
-                except:  # pylint: disable=bare-except
+                except Exception:  # pylint: disable=bare-except
                     pass
 
     def _install_tmp_pkg(self, tmp_pkg):

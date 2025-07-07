@@ -76,14 +76,14 @@ def exists(env):
 def generate(env):
     if not exists(env):
         return env
-    kwargs = dict(
-        _long_sources_hook=long_sources_hook,
-        TEMPFILE=TempFileMunge,
-        MAXLINELENGTH=MAX_LINE_LENGTH,
-        TEMPFILEARGESCFUNC=tempfile_arg_esc_func,
-        TEMPFILESUFFIX=".tmp",
-        TEMPFILEDIR="$BUILD_DIR",
-    )
+    kwargs = {
+        "_long_sources_hook": long_sources_hook,
+        "TEMPFILE": TempFileMunge,
+        "MAXLINELENGTH": MAX_LINE_LENGTH,
+        "TEMPFILEARGESCFUNC": tempfile_arg_esc_func,
+        "TEMPFILESUFFIX": ".tmp",
+        "TEMPFILEDIR": "$BUILD_DIR",
+    }
 
     for name in ("LINKCOM", "ASCOM", "ASPPCOM", "CCCOM", "CXXCOM"):
         kwargs[name] = "${TEMPFILE('%s','$%sSTR')}" % (env.get(name), name)

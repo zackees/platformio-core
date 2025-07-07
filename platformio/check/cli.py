@@ -266,7 +266,7 @@ def print_defects_stats(results):
 
     component_stats = {}
     for r in results:
-        for k, v in r.get("stats", {}).items():
+        for k, _v in r.get("stats", {}).items():
             if not component_stats.get(k):
                 component_stats[k] = Counter()
             component_stats[k].update(r["stats"][k])

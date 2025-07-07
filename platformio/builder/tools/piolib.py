@@ -23,8 +23,7 @@ import sys
 
 import click
 import SCons.Scanner  # pylint: disable=import-error
-from SCons.Script import ARGUMENTS  # pylint: disable=import-error
-from SCons.Script import DefaultEnvironment  # pylint: disable=import-error
+from SCons.Script import ARGUMENTS, DefaultEnvironment  # pylint: disable=import-error
 
 from platformio import exception, fs
 from platformio.builder.tools import piobuild
@@ -710,7 +709,7 @@ class MbedLibBuilder(LibBuilderBase):
         value = None
         if "=" in macro:
             name, value = macro.split("=", 1)
-        return dict(name=name, value=value)
+        return {"name": name, "value": value}
 
     def _mbed_lib_conf_parse_macros(self, mbed_lib_path):
         macros = {}
@@ -726,9 +725,9 @@ class MbedLibBuilder(LibBuilderBase):
         for key, options in manifest.get("config", {}).items():
             if "value" not in options:
                 continue
-            macros[key] = dict(
-                name=options.get("macro_name"), value=options.get("value")
-            )
+            macros[key] = {
+                "name": options.get("macro_name"), "value": options.get("value")
+            }
 
         # overrode items per target
         for target, options in manifest.get("target_overrides", {}).items():
@@ -908,7 +907,7 @@ class ProjectAsLibBuilder(LibBuilderBase):
         super().__init__(env, *args, **kwargs)
         self.env["SRC_FILTER"] = project_src_filter
         if export_projenv:
-            env.Export(dict(projenv=self.env))
+            env.Export({"projenv": self.env})
 
     def __contains__(self, child_path):
         for root_path in (self.include_dir, self.src_dir, self.test_dir):

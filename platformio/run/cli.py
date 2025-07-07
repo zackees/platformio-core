@@ -119,7 +119,7 @@ def cli(  # pylint: disable=too-many-positional-arguments
                 clean_build_dir(build_dir, config)
             except ProjectError as exc:
                 raise exc
-            except:  # pylint: disable=bare-except
+            except Exception:  # pylint: disable=bare-except
                 click.secho(
                     "Can not remove temporary directory `%s`. Please remove "
                     "it manually to avoid build issues" % build_dir,

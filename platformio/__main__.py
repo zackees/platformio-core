@@ -24,7 +24,7 @@ from platformio.compat import IS_CYGWIN, ensure_python3
 
 
 @click.command(
-    cls=PlatformioCLI, context_settings=dict(help_option_names=["-h", "--help"])
+    cls=PlatformioCLI, context_settings={"help_option_names": ["-h", "--help"]}
 )
 @click.version_option(__version__, prog_name="PlatformIO Core")
 @click.option("--force", "-f", is_flag=True, help="DEPRECATED", hidden=True)
@@ -50,7 +50,7 @@ def cli(ctx, force, caller, no_ansi):  # pylint: disable=unused-argument
         ):
             # pylint: disable=protected-access
             click._compat.isatty = lambda stream: True
-    except:  # pylint: disable=bare-except
+    except Exception:  # pylint: disable=bare-except
         pass
 
     maintenance.on_cmd_start(ctx, caller)

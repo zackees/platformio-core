@@ -116,8 +116,7 @@ class ZIPArchiver(BaseArchiver):
     def preserve_mtime(item, dest_dir):
         fs.change_filemtime(
             os.path.join(dest_dir, item.filename),
-            mktime(tuple(item.date_time) + tuple([0, 0, 0])),
-        )
+            mktime(item.date_time + (0, 0, 0))
 
     @staticmethod
     def is_link(_):  # pylint: disable=arguments-differ

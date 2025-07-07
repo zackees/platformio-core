@@ -27,8 +27,6 @@ from platformio import __version__
 
 # pylint: disable=unused-import
 from platformio.device.list.util import list_serial_ports as get_serial_ports
-from platformio.fs import cd, load_json
-from platformio.proc import exec_command
 
 # pylint: enable=unused-import
 

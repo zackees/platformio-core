@@ -77,7 +77,7 @@ def get_default_projects_dir():
         buf = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
         ctypes.windll.shell32.SHGetFolderPathW(None, 5, None, 0, buf)
         docs_dir = buf.value
-    except:  # pylint: disable=bare-except
+    except Exception:  # pylint: disable=bare-except
         if not IS_MACOS:
             try:
                 docs_dir = (

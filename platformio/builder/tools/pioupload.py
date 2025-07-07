@@ -47,7 +47,7 @@ def TouchSerialPort(env, port, baudrate):
         s = Serial(port=port, baudrate=baudrate)
         s.setDTR(False)
         s.close()
-    except:  # pylint: disable=bare-except
+    except Exception:  # pylint: disable=bare-except
         pass
     sleep(0.4)  # DO NOT REMOVE THAT (required by SAM-BA based boards)
 

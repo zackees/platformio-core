@@ -256,7 +256,7 @@ class ManifestSchema(BaseSchema):
             raise ValidationError(
                 "Could not load SPDX licenses for validation"
             ) from exc
-        known_ids = set(item.get("licenseId") for item in spdx.get("licenses", []))
+        known_ids = {item.get("licenseId") for item in spdx.get("licenses", [])}
         if value in known_ids:
             return True
         # parse license expression
