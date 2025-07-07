@@ -6,4 +6,5 @@
 set -e
 
 # Install the project in editable mode with the dev dependencies.
-$HOME/.local/bin/uv pip install -e .[dev]
+# $HOME/.local/bin/uv pip install -e .[dev]
+uv pip install -e .[dev]

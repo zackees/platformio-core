@@ -15,8 +15,10 @@
 import os
 
 from SCons.Action import Action  # pylint: disable=import-error
-from SCons.Script import ARGUMENTS  # pylint: disable=import-error
-from SCons.Script import AlwaysBuild  # pylint: disable=import-error
+from SCons.Script import (
+    ARGUMENTS,  # pylint: disable=import-error
+    AlwaysBuild,  # pylint: disable=import-error
+)
 
 from platformio import compat, fs
 

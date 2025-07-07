@@ -15,9 +15,11 @@
 import os
 import sys
 
-from SCons.Script import ARGUMENTS  # pylint: disable=import-error
-from SCons.Script import COMMAND_LINE_TARGETS  # pylint: disable=import-error
-from SCons.Script import DefaultEnvironment  # pylint: disable=import-error
+from SCons.Script import (
+    ARGUMENTS,  # pylint: disable=import-error
+    COMMAND_LINE_TARGETS,  # pylint: disable=import-error
+    DefaultEnvironment,  # pylint: disable=import-error
+)
 
 from platformio import fs, util
 from platformio.compat import IS_MACOS, IS_WINDOWS

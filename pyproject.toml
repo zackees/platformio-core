@@ -1,12 +1,12 @@
 
 [project]
 name = "platformio"
-version = "6.1.15"
+version = "6.2.0"
 description = "A professional collaborative platform for embedded development"
 readme = "README.rst"
 authors = [{ name = "PlatformIO", email = "contact@platformio.org" }]
 license = { text = "Apache-2.0" }
-requires-python = ">=3.6"
+requires-python = ">=3.10"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Environment :: Console",
@@ -77,7 +77,7 @@ dev = [
 
 [tool.ruff.lint]
 select = ["E", "W", "F", "I", "C", "B"]
-ignore = ["E501"]
+ignore = ["E501", "C901"]
 
 [tool.ruff]
 line-length = 88

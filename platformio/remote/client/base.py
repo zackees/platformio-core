@@ -17,10 +17,12 @@ from time import time
 
 import click
 from twisted.internet import defer, endpoints, reactor  # pylint: disable=import-error
-from twisted.logger import ILogObserver  # pylint: disable=import-error
-from twisted.logger import Logger  # pylint: disable=import-error
-from twisted.logger import LogLevel  # pylint: disable=import-error
-from twisted.logger import formatEvent  # pylint: disable=import-error
+from twisted.logger import (
+    ILogObserver,  # pylint: disable=import-error
+    Logger,  # pylint: disable=import-error
+    LogLevel,  # pylint: disable=import-error
+    formatEvent,  # pylint: disable=import-error
+)
 from twisted.python import failure  # pylint: disable=import-error
 from twisted.spread import pb  # pylint: disable=import-error
 from zope.interface import provider  # pylint: disable=import-error

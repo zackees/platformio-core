@@ -53,7 +53,7 @@ def _get_symbol_locations(env, elf_path, addrs):
     locations = [line for line in result["out"].split("\n") if line]
     assert len(addrs) == len(locations)
 
-    return dict(zip(addrs, [loc.strip() for loc in locations]))
+    return dict(zip(addrs, [loc.strip() for loc in locations], strict=False))
 
 
 def _get_demangled_names(env, mangled_names):
@@ -68,7 +68,7 @@ def _get_demangled_names(env, mangled_names):
     return dict(
         zip(
             mangled_names,
-            [dn.strip().replace("::__FUNCTION__", "") for dn in demangled_names],
+            [dn.strip().replace("::__FUNCTION__", "") for dn in demangled_names], strict=False,
         )
     )
 

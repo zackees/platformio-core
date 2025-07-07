@@ -281,7 +281,7 @@ def print_defects_stats(results):
         tool_defect = [v.get(s, 0) for s in severity_labels]
         tabular_data.append([k] + tool_defect)
 
-    total = ["Total"] + [sum(d) for d in list(zip(*tabular_data))[1:]]
+    total = ["Total"] + [sum(d) for d in list(zip(*tabular_data, strict=False))[1:]]
     tabular_data.sort()
     tabular_data.append([])  # Empty line as delimiter
     tabular_data.append(total)

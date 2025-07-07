@@ -289,10 +289,10 @@ def log_debug_exception(exc, debug_config: DebugConfigBase):
     # cleanup sensitive information, such as paths
     description = fs.to_unix_path(str(exc))
     description = re.sub(
-        r'(^|\s+|")(?:[a-z]\:)?((/[^"/]+)+)(\s+|"|$)',
-        lambda m: " %s " % os.path.join(*m.group(2).split("/")[-2:]),
-        description,
-        re.I | re.M,
+        pattern=r'(^|\s+|")(?:[a-z]\:)?((/[^"/]+)+)(\s+|"|$)',
+        repl=lambda m: " %s " % os.path.join(*m.group(2).split("/")[-2:]),
+        string=description,
+        count=re.I | re.M,
     )
     params = {
         "name": exc.__class__.__name__,
