@@ -443,7 +443,7 @@ class ModuleJsonManifestParser(BaseManifestParser):
             name, email = self.parse_author_name_and_email(author)
             if not name:
                 continue
-            result.append(self.cleanup_author(dict(name=name, email=email)))
+            result.append(self.cleanup_author({"name": name, "email": email}))
         return result
 
     @staticmethod
@@ -456,7 +456,7 @@ class ModuleJsonManifestParser(BaseManifestParser):
     def _parse_dependencies(raw):
         if isinstance(raw, dict):
             return [
-                dict(name=name, version=version, frameworks=["mbed"])
+                {"name": name, "version": version, "frameworks": ["mbed"]}
                 for name, version in raw.items()
             ]
         raise ManifestParserError("Invalid dependencies format, should be a dictionary")
@@ -636,7 +636,7 @@ class LibraryPropertiesManifestParser(BaseManifestParser):
                     "frameworks": ["arduino"],
                 })
             else:
-                result.append(dict(name=item, frameworks=["arduino"]))
+                result.append({"name": item, "frameworks": ["arduino"]})
         return result
 
 
@@ -707,7 +707,7 @@ class PackageJsonManifestParser(BaseManifestParser):
     def _parse_repository(data):
         if isinstance(data.get("repository", {}), dict):
             return data
-                    data["repository"] = {"type": "git", "url": str(data["repository"])}
+        data["repository"] = {"type": "git", "url": str(data["repository"])}
         if data["repository"]["url"].startswith(("github:", "gitlab:", "bitbucket:")):
             data["repository"]["url"] = "https://{0}.com/{1}".format(
                 *(data["repository"]["url"].split(":", 1))

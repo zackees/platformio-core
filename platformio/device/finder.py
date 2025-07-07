@@ -57,7 +57,7 @@ def parse_udev_rules_hwids(path):
 def is_pattern_port(port):
     if not port:
         return False
-    return set(["*", "?", "[", "]"]) & set(port)
+    return {"*", "?", "[", "]"} & set(port)
 
 
 def find_mbed_disk(initial_port):
@@ -74,7 +74,7 @@ def find_mbed_disk(initial_port):
         mbed_pages = [os.path.join(item["path"], n) for n in ("mbed.htm", "mbed.html")]
         if any(os.path.isfile(p) for p in mbed_pages):
             return item["path"]
-        if item["name"] and any(l in item["name"].lower() for l in msdlabels):
+        if item["name"] and any(label in item["name"].lower() for label in msdlabels):
             return item["path"]
     return None
 
@@ -83,7 +83,7 @@ def is_serial_port_ready(port, timeout=1):
     try:
         serial.Serial(port, timeout=timeout).close()
         return True
-    except:  # pylint: disable=bare-except
+    except Exception:  # pylint: disable=broad-except
         pass
     return False
 

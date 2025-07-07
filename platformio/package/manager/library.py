@@ -52,7 +52,7 @@ class LibraryPackageManager(BasePackageManager):  # pylint: disable=too-many-anc
             json.dump({
                 "name": spec.name,
                 "version": self.generate_rand_version(),
-            },
+            }, fp)
 
         return root_dir
 

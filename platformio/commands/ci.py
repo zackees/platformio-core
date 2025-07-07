@@ -87,7 +87,7 @@ def cli(  # pylint: disable=too-many-arguments,too-many-positional-arguments, to
         if not os.path.isdir(build_dir):
             os.makedirs(build_dir)
 
-        for dir_name, patterns in dict(lib=lib, src=src).items():
+        for dir_name, patterns in {"lib": lib, "src": src}.items():
             if not patterns:
                 continue
             contents = []

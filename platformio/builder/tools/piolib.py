@@ -44,7 +44,9 @@ from platformio.project.options import ProjectOptions
 
 class LibBuilderFactory:
     @staticmethod
-    def new(env, path, verbose=int(ARGUMENTS.get("PIOVERBOSE", 0))):
+    def new(env, path, verbose=None):
+        if verbose is None:
+            verbose = int(ARGUMENTS.get("PIOVERBOSE", 0))
         clsname = "UnknownLibBuilder"
         if os.path.isfile(os.path.join(path, "library.json")):
             clsname = "PlatformIOLibBuilder"
@@ -1066,7 +1068,9 @@ def GetLibSourceDirs(env):
     ]
 
 
-def IsCompatibleLibBuilder(env, lb, verbose=int(ARGUMENTS.get("PIOVERBOSE", 0))):
+def IsCompatibleLibBuilder(env, lb, verbose=None):
+    if verbose is None:
+        verbose = int(ARGUMENTS.get("PIOVERBOSE", 0))
     compat_mode = lb.lib_compat_mode
     if lb.name in env.GetProjectOption("lib_ignore", []):
         if verbose:

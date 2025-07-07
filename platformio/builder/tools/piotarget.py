@@ -15,10 +15,8 @@
 import os
 
 from SCons.Action import Action  # pylint: disable=import-error
-from SCons.Script import (
-    ARGUMENTS,  # pylint: disable=import-error
-    AlwaysBuild,  # pylint: disable=import-error
-)
+from SCons.Script import ARGUMENTS  # pylint: disable=import-error
+from SCons.Script import AlwaysBuild  # pylint: disable=import-error
 
 from platformio import compat, fs
 
@@ -86,11 +84,11 @@ def AddTarget(  # pylint: disable=too-many-arguments,too-many-positional-argumen
 
 
 def AddPlatformTarget(env, *args, **kwargs):
-    return env.AddTarget(group="Platform", *args, **kwargs)
+    return env.AddTarget(*args, group="Platform", **kwargs)
 
 
 def AddCustomTarget(env, *args, **kwargs):
-    return env.AddTarget(group="Custom", *args, **kwargs)
+    return env.AddTarget(*args, group="Custom", **kwargs)
 
 
 def DumpTargets(env):

@@ -192,10 +192,10 @@ class DebugConfigBase:  # pylint: disable=too-many-instance-attributes
                 self.platform.install_package(server_package)
                 server_package_dir = self.platform.get_package_dir(server_package)
             result.update(
-                dict(
-                    cwd=server_package_dir if server_package else None,
-                    executable=result.get("executable"),
-                    arguments=[
+                {
+                    "cwd": server_package_dir if server_package else None,
+                    "executable": result.get("executable"),
+                    "arguments": [
                         (
                             a.replace("$PACKAGE_DIR", server_package_dir)
                             if server_package_dir
@@ -203,7 +203,7 @@ class DebugConfigBase:  # pylint: disable=too-many-instance-attributes
                         )
                         for a in result.get("arguments", [])
                     ],
-                )
+                }
             )
         return self.reveal_patterns(result) if result else None
 

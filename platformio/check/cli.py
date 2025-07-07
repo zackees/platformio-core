@@ -127,19 +127,19 @@ def cli(  # pylint: disable=too-many-positional-arguments
                 )
             )
 
-            tool_options = dict(
-                verbose=verbose,
-                silent=silent,
-                src_filters=env_src_filters,
-                flags=flags or env_options.get("check_flags"),
-                severity=(
+            tool_options = {
+                "verbose": verbose,
+                "silent": silent,
+                "src_filters": env_src_filters,
+                "flags": flags or env_options.get("check_flags"),
+                "severity": (
                     [DefectItem.SEVERITY_LABELS[DefectItem.SEVERITY_HIGH]]
                     if silent
                     else severity or config.get("env:" + envname, "check_severity")
                 ),
-                skip_packages=skip_packages or env_options.get("check_skip_packages"),
-                platform_packages=env_options.get("platform_packages"),
-            )
+                "skip_packages": skip_packages or env_options.get("check_skip_packages"),
+                "platform_packages": env_options.get("platform_packages"),
+            }
 
             for tool in config.get("env:" + envname, "check_tool"):
                 if skipenv:

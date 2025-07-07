@@ -383,7 +383,7 @@ class ProjectConfigBase:
         try:
             value = self.getraw(section, option, default)
         except configparser.Error as exc:
-            raise exception.InvalidProjectConfError(self.path, str(exc))
+            raise exception.InvalidProjectConfError(self.path, str(exc)) from exc
 
         option_meta = self.find_option_meta(section, option)
         if not option_meta:
@@ -401,7 +401,7 @@ class ProjectConfigBase:
             raise exception.ProjectOptionValueError(
                 "%s for `%s` option in the `%s` section (%s)"
                 % (exc.format_message(), option, section, option_meta.description)
-            )
+            ) from exc
 
     @staticmethod
     def cast_to(value, to_type):

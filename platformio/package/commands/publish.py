@@ -38,7 +38,7 @@ def validate_datetime(ctx, param, value):  # pylint: disable=unused-argument
     try:
         datetime.strptime(value, "%Y-%m-%d %H:%M:%S")
     except ValueError as exc:
-        raise click.BadParameter(exc)
+        raise click.BadParameter(exc) from exc
     return value
 
 
@@ -171,7 +171,7 @@ def check_package_duplicates(
     found = False
     items = (
         RegistryClient()
-        .list_packages(qualifiers=dict(types=[type], names=[name]))
+        .list_packages(qualifiers={"types": [type], "names": [name]})
         .get("items")
     )
     if not items:

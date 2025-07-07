@@ -61,7 +61,7 @@ def package_exec_cmd(obj, package, call, args):
 
     result = None
     try:
-        run_options = dict(shell=call is not None, env=os.environ)
+        run_options = {"shell": call is not None, "env": os.environ}
         force_click_stream = (obj or {}).get("force_click_stream")
         if force_click_stream:
             run_options.update(stdout=subprocess.PIPE, stderr=subprocess.STDOUT)

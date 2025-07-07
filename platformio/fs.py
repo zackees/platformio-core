@@ -187,7 +187,7 @@ def match_src_files(src_dir, src_filter=None, src_exts=None, followlinks=True):
             result |= candidates
         else:
             result -= candidates
-    return sorted(list(result))
+    return sorted(result)
 
 
 def to_unix_path(path):

@@ -150,5 +150,5 @@ class DebugBaseProcess:
         try:
             self.transport.kill()
             self.transport.close()
-        except:  # pylint: disable=bare-except
+        except Exception:  # pylint: disable=broad-except
             pass

@@ -363,28 +363,28 @@ class ProjectRPC(BaseRPCHandler):
                     continue
                 f_manifest = platform.pm.load_manifest(f_pkg)
                 frameworks.append(
-                    dict(
-                        name=name,
-                        title=f_manifest.get("title"),
-                        version=str(f_pkg.metadata.version),
-                    )
+                    {
+                        "name": name,
+                        "title": f_manifest.get("title"),
+                        "version": str(f_pkg.metadata.version),
+                    }
                 )
 
-            return dict(
-                platform=dict(
-                    ownername=(
+            return {
+                "platform": {
+                    "ownername": (
                         platform_pkg.metadata.spec.owner
                         if platform_pkg.metadata.spec
                         else None
                     ),
-                    name=platform.name,
-                    title=platform.title,
-                    version=str(platform_pkg.metadata.version),
-                ),
-                board=(
+                    "name": platform.name,
+                    "title": platform.title,
+                    "version": str(platform_pkg.metadata.version),
+                },
+                "board": (
                     platform.board_config(board_id).get_brief_data()
                     if board_id
                     else None
                 ),
-                frameworks=frameworks or None,
-            )
+                "frameworks": frameworks or None,
+            }

@@ -339,7 +339,7 @@ def lib_search(  # pylint: disable=unused-argument
     result = regclient.fetch_json_data(
         "get",
         "/v2/lib/search",
-        params=dict(query=" ".join(query), page=page),
+        params={"query": " ".join(query), "page": page},
         x_cache_valid="1d",
     )
     return click.echo(json.dumps(result))
