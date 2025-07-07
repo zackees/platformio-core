@@ -74,6 +74,8 @@ dev = [
     "ruff",
     "isort",
     "pyright",
+    "pytest",
+    "pytest-xdist",
 ]
 
 [tool.ruff.lint]
