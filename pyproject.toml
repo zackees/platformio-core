@@ -76,6 +76,8 @@ dev = [
     "pyright",
     "pytest",
     "pytest-xdist",
+    "codespell",
+    "jsondiff",
 ]
 
 [tool.ruff.lint]
