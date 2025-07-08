@@ -57,3 +57,8 @@ def test_unrecognized_options(clirunner, validate_cliresult, isolated_pio_core):
         match=(r"openocd: (unrecognized|unknown) option"),
     ):
         validate_cliresult(result)
+
+
+if __name__ == "__main__":
+    import pytest
+    pytest.main()

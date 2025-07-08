@@ -17,7 +17,7 @@ import tarfile
 from binascii import crc32
 from os.path import getmtime, getsize, isdir, isfile, join
 
-from twisted.python import constants  # type: ignore
+import constantly as constants
 
 from platformio.compat import hashlib_encode_data
 
